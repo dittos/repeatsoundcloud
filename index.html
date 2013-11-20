@@ -13,5 +13,35 @@
     <li>???</li>
     <li>PROFIT!</li>
 </ol>
+
+<iframe id="widget" style="width: 500px; height: 300px"></iframe>
+
+<script src="https://w.soundcloud.com/player/api.js"></script>
+<script>
+var el = document.getElementById('widget');
+var player = null;
+function refreshPlayer() {
+    var url = location.hash;
+    if (!url) {
+        el.style.display = 'none';
+        return;
+    }
+
+    url = 'http://soundcloud.com' + url.substring(1);
+    el.style.display = 'block';
+
+    if (player == null) {
+        el.src = 'http://w.soundcloud.com/player/?url=' + encodeURIComponent(url);
+        player = SC.Widget(el);
+    } else {
+        player.load(url);
+    }
+}
+refreshPlayer();
+// TODO: fallback for IE6/7
+window.onhashchange = function() {
+    refreshPlayer();
+};
+</script>
 </body>
 </html>
