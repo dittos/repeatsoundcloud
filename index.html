@@ -31,10 +31,13 @@ function refreshPlayer() {
     el.style.display = 'block';
 
     if (player == null) {
-        el.src = 'http://w.soundcloud.com/player/?url=' + encodeURIComponent(url);
+        el.src = 'http://w.soundcloud.com/player/?url=' + encodeURIComponent(url) + '&auto_play=true';
         player = SC.Widget(el);
+        player.bind(SC.Widget.Events.FINISH, function() {
+            player.play();
+        });
     } else {
-        player.load(url);
+        player.load(url, {auto_play: true});
     }
 }
 refreshPlayer();
